@@ -1,0 +1,5 @@
+[webhook]
+url = "https://n8n-wlwxkwaq.ap-southeast-1.clawcloudrun.com/webhook/hdbaiagent"
+
+[api]
+predict_url = "https://hdb-proj-938050412638.asia-southeast1.run.app/predict"

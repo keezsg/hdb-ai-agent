@@ -1,12 +1,20 @@
 import streamlit as st
 import requests
 from datetime import datetime
+import toml
+
+# Load config
+config = toml.load("config.toml")
+url = config["webhook"]["url"]
+
+# ... rest of your code ...
+
 
 # Page configuration
 st.set_page_config(
     page_title="HDB AI Agent",
     page_icon="🏠",
-    layout="wide",
+    layout="centered",
     initial_sidebar_state="expanded"
 )
 
@@ -39,6 +47,7 @@ def load_css():
 
     </style>
     """, unsafe_allow_html=True)
+
 
 
 def display_chat_history():
@@ -74,10 +83,6 @@ def main():
         """)
 
     st.divider()
-
-    # webhook url
-    url = "https://n8n-wlwxkwaq.ap-southeast-1.clawcloudrun.com/webhook/hdbaiagent"
-
 
     #with st.chat_message("ai"):
     #    st.write("Hello! I am your HDB AI Agent 👋")

@@ -26,7 +26,7 @@ from hdb_charts import data_last_resale_price
 df = pd.read_csv("data/data_concat.csv", header=0)
 
 # run intial preprocessing
-df_initial_preproc(df)
+df = df_initial_preproc(df)
 
 # Get unique values for dropdowns
 flat_types = sorted(df['flat_type'].unique())
@@ -87,16 +87,16 @@ if selected_room and selected_town:
 
 
     st.markdown("\n\n\n\n\n")
-    tab3, tab3a, tab4= st.tabs([f"{selected_town}", f"All Town-{selected_room}", "All Town-All Flat"])
-    with tab3:
-        chart3 = plot_resale_price_single(df, selected_town)
-        st.markdown("\n\n\n")
-        st.pyplot(chart3)
-
+    tab3a, tab3b, tab4= st.tabs([f"{selected_town}", f"All Town-{selected_room}", "All Town-All Flat"])
     with tab3a:
-        chart3a = plot_resale_price_all_2(df, selected_room)
+        chart3a = plot_resale_price_single(df, selected_town)
         st.markdown("\n\n\n")
         st.pyplot(chart3a)
+
+    with tab3b:
+        chart3b = plot_resale_price_all_2(df, selected_room)
+        st.markdown("\n\n\n")
+        st.pyplot(chart3b)
 
     with tab4:
         chart4 = plot_resale_price_all(df)
@@ -140,9 +140,6 @@ if selected_room and selected_town:
         chart8 = plot_pricePerMonth_all(df)
         st.markdown("\n\n\n")
         st.pyplot(chart8)
-
-
-
 
 else:
     st.info("Please select a Flat Type and Town to view the trend.")

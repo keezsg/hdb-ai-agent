@@ -1,16 +1,17 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-#import matplotlib.pyplot as plt
-#import matplotlib.ticker as mtick
 import requests
+import toml
 
+# Load config
+config = toml.load("config.toml")
+url = config["api"]["predict_url"]
 
 st.title("HDB buying & selling companion")
 
 st.header("Enter parameters for resale price prediction")
 
-st.markdown("\n\n\n\n\n\n\n")
+st.markdown("<br><br>", unsafe_allow_html=True)
 
 #input parameter
 block = st.text_input(
@@ -78,8 +79,7 @@ params = {
 }
 
 
-st.markdown("\n\n\n\n\n\n\n")
-url = 'https://hdb-proj-938050412638.asia-southeast1.run.app/predict'
+st.markdown("<br><br>", unsafe_allow_html=True)
 if st.button("Get HDB price prediction"):
     respond = requests.get(url, params=params)
     if respond.status_code == 200:
@@ -90,20 +90,27 @@ if st.button("Get HDB price prediction"):
     else:
         st.error("Failed to retrive prediction from API")
 
-st.markdown("\n\n\n\n\n\n\n")
+@st.cache_data
+def load_coords():
+    return pd.read_csv("data/coords_with_walk_metrics.csv")
+
+st.markdown("<br>", unsafe_allow_html=True)
 if st.button("View HDB location"):
     add = f"{block} {street_name}"
-    coord_df = pd.read_csv("data/coords_with_walk_metrics.csv")
+    coord_df = load_coords()
     coord_df_filtered = coord_df.query("add == @add")
 
-    lat = coord_df_filtered.iloc[0]["latitude"]
-    lon = coord_df_filtered.iloc[0]["longitude"]
+    if coord_df_filtered.empty:
+        st.error("Address not found in coordinates data.")
+    else:
+        lat = coord_df_filtered.iloc[0]["latitude"]
+        lon = coord_df_filtered.iloc[0]["longitude"]
 
-    lat_lon_data = {
-    "lat": lat,
-    "lon": lon,
-    }
+        lat_lon_data = {
+        "lat": lat,
+        "lon": lon,
+        }
 
-    lat_lon_df = pd.DataFrame(lat_lon_data, index=[0])
+        lat_lon_df = pd.DataFrame(lat_lon_data, index=[0])
 
-    st.map(lat_lon_df, zoom=15, size=25)
+        st.map(lat_lon_df, zoom=15, size=25)
