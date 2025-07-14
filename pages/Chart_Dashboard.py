@@ -21,6 +21,36 @@ from hdb_charts import data_resale_price_single
 from hdb_charts import data_sqm_single_twn_room
 from hdb_charts import data_last_resale_price
 
+st.markdown("""
+<style>
+    /* Increase font size for most text elements */
+    .stMarkdown, .stText, p, div, span {
+        font-size: 17px !important;
+    }
+
+    /* Increase font size for selectbox and text input */
+    .stSelectbox > div > div,
+    .stTextInput > div > div > input {
+        font-size: 15px !important;
+    }
+
+    /* Headers */
+    h1 {
+        font-size: 2.5rem !important;
+    }
+    h2 {
+        font-size: 2rem !important;
+    }
+    h3 {
+        font-size: 1.5rem !important;
+    }
+
+    /* Sidebar font size - more robust selector */
+    section[data-testid="stSidebar"] {
+        font-size: 17px !important;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 #import data
 df = pd.read_csv("data/data_concat.csv", header=0)

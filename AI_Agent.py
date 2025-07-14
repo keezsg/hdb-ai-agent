@@ -7,9 +7,6 @@ import toml
 config = toml.load("config.toml")
 url = config["webhook"]["url"]
 
-# ... rest of your code ...
-
-
 # Page configuration
 st.set_page_config(
     page_title="HDB AI Agent",
@@ -17,6 +14,38 @@ st.set_page_config(
     layout="centered",
     initial_sidebar_state="expanded"
 )
+
+st.markdown("""
+<style>
+    /* Increase font size for most text elements */
+    .stMarkdown, .stText, p, div, span {
+        font-size: 17px !important;
+    }
+
+    /* Increase font size for selectbox and text input */
+    .stSelectbox > div > div,
+    .stTextInput > div > div > input {
+        font-size: 15px !important;
+    }
+
+    /* Headers */
+    h1 {
+        font-size: 2.5rem !important;
+    }
+    h2 {
+        font-size: 2rem !important;
+    }
+    h3 {
+        font-size: 1.5rem !important;
+    }
+
+    /* Sidebar font size - more robust selector */
+    section[data-testid="stSidebar"] {
+        font-size: 17px !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 
 def load_css():
     # Custom CSS for better styling
@@ -133,7 +162,7 @@ def main():
 
     # Sidebar configuration
     with st.sidebar:
-        st.markdown('<h2 class="sidebar-title">ℹ️ About HDB AI AGENT</h2>', unsafe_allow_html=True)
+        st.markdown('<h3 class="sidebar-title">ℹ️ About HDB AI AGENT</h3>', unsafe_allow_html=True)
 
         # Information section
         st.markdown("""
